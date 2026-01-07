@@ -4,18 +4,62 @@ body {
   margin: 0;
 }
 
-.header {
-  background: #333;
-  color: #fff;
-  padding: 12px 20px;
-  display: flex;
-  justify-content: space-between;
+/* ===== Attractive Calculator Header ===== */
+.calc-header {
+  background: linear-gradient(135deg, #eef6ec, #f7faf7);
+  border-bottom: 1px solid #dcdcdc;
+  padding: 26px 20px;
 }
 
-.header a {
-  margin: 0 10px;
-  color: #ddd;
-  cursor: pointer;
+.calc-header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.calc-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  font-size: 28px;
+}
+
+.logo-text {
+  font-size: 26px;
+  font-weight: 600;
+  color: #2e7d32;
+}
+
+.calc-tagline {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Mobile friendly */
+@media (max-width: 600px) {
+  .logo-text {
+    font-size: 20px;
+  }
+  .calc-tagline {
+    font-size: 13px;
+  }
+}
+.tabs span {
+  position: relative;
+}
+
+.tabs span.active::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: -6px;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(135deg, #43a047, #7cb342);
 }
 
 .container {
@@ -25,15 +69,57 @@ body {
   overflow-x: hidden; /* safety */
 }
 
-.tabs span {
-  margin-right: 15px;
-  padding-bottom: 5px;
-  cursor: pointer;
+/* ===== Tabs Container ===== */
+.tabs {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  background: #f6f8fa;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+  overflow-x: auto;
 }
 
-.tabs .active {
-  border-bottom: 3px solid #2b7cff;
+/* ===== Individual Tab ===== */
+.tabs span {
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s ease;
 }
+
+/* Hover Effect */
+.tabs span:hover {
+  background: rgba(46, 125, 50, 0.1);
+  color: #2e7d32;
+}
+
+/* ===== Active Tab ===== */
+.tabs span.active {
+  background: linear-gradient(135deg, #43a047, #7cb342);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(67, 160, 71, 0.4);
+}
+
+/* Mobile Friendly */
+@media (max-width: 600px) {
+  .tabs {
+    padding: 10px;
+    gap: 6px;
+  }
+
+  .tabs span {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+}
+
 
 .box {
   display: flex;
@@ -143,4 +229,316 @@ input {
   justify-content: space-between;
   color: #2b7cff;
   cursor: pointer;
+}
+.result-box.green {
+  background: #f2f8e9;
+  border-left: 6px solid #7cb342;
+  padding: 20px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.result-box.green .left,
+.result-box.green .right {
+  width: 48%;
+}
+
+.date-parts input {
+  width: 60px;
+  margin-right: 10px;
+}
+
+.link-btn {
+  color: #1976d2;
+  cursor: pointer;
+}
+.weekday-result {
+  margin-top: 20px;
+}
+
+.weekday-result h2 {
+  font-weight: 600;
+}
+
+.weekday-result ul {
+  margin-top: 10px;
+}
+
+.calc-btn.small {
+  height: 40px;
+  margin-top: 25px;
+}
+/* ===== Week No Page ===== */
+.weekno-page {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Cards */
+.card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 16px;
+}
+
+.card h3 {
+  margin-bottom: 12px;
+  color: #333;
+}
+
+/* Row */
+.row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Inputs */
+.row input {
+  width: 80px;
+  height: 42px;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.row input:focus {
+  outline: none;
+  border-color: #4caf50;
+}
+
+/* Buttons */
+.row button {
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 6px;
+  border: none;
+  background: #4caf50;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.row button:hover {
+  background: #43a047;
+}
+
+/* OR Text */
+.or-text {
+  text-align: center;
+  margin: 12px 0;
+  font-weight: bold;
+  color: #666;
+}
+
+/* Result layout */
+.result-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Result card */
+.result-card {
+  background: #f1f8e9;
+  border-left: 6px solid #66bb6a;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.result-card p {
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+/* Calendar */
+.calendar {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.cal-cell {
+  text-align: center;
+  padding: 6px;
+  border-radius: 4px;
+}
+
+.cal-cell.highlight {
+  background: #c8e6c9;
+  font-weight: bold;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .result-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.calendar {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.cal-head {
+  font-weight: bold;
+  text-align: center;
+}
+
+.cal-cell {
+  text-align: center;
+  padding: 6px;
+  border: 1px solid #eee;
+}
+
+.cal-cell.highlight {
+  background: #dbe9f6;
+  border: 1px solid #1976d2;
+}
+
+.result-box.green {
+  background: #f2f8e9;
+  border-left: 6px solid #7cb342;
+  padding: 15px;
+}
+/* ===== Add Workdays Page ===== */
+.addworkdays-page {
+  max-width: 850px;
+  margin: auto;
+  padding: 20px;
+}
+
+.page-title {
+  font-size: 26px;
+  font-weight: 600;
+  color: #2e7d32;
+}
+
+.page-subtitle {
+  margin-bottom: 20px;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Card */
+.card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* Sections */
+.section {
+  margin-bottom: 20px;
+}
+
+.section.row {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+/* Date inputs */
+.date-parts {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.date-parts input {
+  width: 90px;
+  height: 44px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  text-align: center;
+  font-size: 14px;
+}
+
+.date-parts input:focus,
+.section select:focus {
+  outline: none;
+  border-color: #4caf50;
+  box-shadow: 0 0 0 3px rgba(76,175,80,0.15);
+}
+
+/* Select & number input */
+.section select,
+.section input[type="number"] {
+  height: 44px;
+  width: 160px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 0 10px;
+  font-size: 14px;
+}
+
+/* Today link */
+.link-btn {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 13px;
+  color: #1976d2;
+  cursor: pointer;
+}
+
+/* Primary button */
+.primary-btn {
+  margin-top: 20px;
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #43a047, #7cb342);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(67,160,71,0.4);
+}
+
+/* Result wrapper */
+.result-wrapper {
+  margin-top: 24px;
+  animation: fadeUp 0.3s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .section.row {
+    flex-direction: column;
+  }
+  .date-parts input {
+    width: 100%;
+  }
 }

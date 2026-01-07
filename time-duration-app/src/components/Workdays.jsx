@@ -1,73 +1,136 @@
 import { useState } from "react";
-import WorkdaysResult from "./WorkdaysResult";
+import AddWorkdaysResult from "./AddWorkdaysResult";
 
-export default function Workdays() {
-  const [start, setStart] = useState("");
-  const [end, setEnd] = useState("");
-  const [includeEnd, setIncludeEnd] = useState(false);
+export default function AddWorkdays() {
+  const today = new Date();
+
+  const [start, setStart] = useState({
+    day: today.getDate(),
+    month: today.getMonth() + 1,
+    year: today.getFullYear(),
+  });
+
+  const [mode, setMode] = useState("add");
+  const [days, setDays] = useState("");
   const [result, setResult] = useState(null);
 
-  function isWeekend(date) {
-    const day = date.getDay();
-    return day === 0 || day === 6; // Sunday or Saturday
-  }
+  const isWeekend = (d) => d.getDay() === 0 || d.getDay() === 6;
 
-  function calculateWorkdays() {
-    if (!start || !end) return;
+  const buildDate = () =>
+    new Date(start.year, start.month - 1, start.day);
 
-    let s = new Date(start);
-    let e = new Date(end);
+  function calculate() {
+    if (!days) return;
 
-    if (e < s) [s, e] = [e, s];
+    const values = days
+      .split(/[ ,]+/)
+      .map(Number)
+      .filter(Boolean);
 
-    let count = 0;
-    let current = new Date(s);
+    const outputs = values.map((value) => {
+      let current = buildDate();
+      let workdays = 0;
+      let calendarDays = 0;
+      let skippedDays = 0;
+      let skippedSundays = [];
 
-    while (current <= e) {
-      if (!isWeekend(current)) {
-        count++;
+      while (workdays < value) {
+        current.setDate(
+          current.getDate() + (mode === "add" ? 1 : -1)
+        );
+        calendarDays++;
+
+        if (isWeekend(current)) {
+          skippedDays++;
+          if (current.getDay() === 0) {
+            skippedSundays.push(new Date(current));
+          }
+        } else {
+          workdays++;
+        }
       }
-      current.setDate(current.getDate() + 1);
-    }
 
-    if (!includeEnd && count > 0) {
-      count--; // remove end date if unchecked
-    }
+      return {
+        startDate: buildDate(),
+        addedDays: value,
+        resultDate: new Date(current),
+        calendarDays,
+        skippedDays,
+        skippedSundays,
+        skippedHolidays: [],
+      };
+    });
 
-    setResult(count);
+    setResult(outputs);
   }
 
   return (
     <>
+      {/* START DATE */}
       <div className="date-grid">
-        {/* START DATE */}
         <div>
           <h3>Start Date</h3>
-          <input type="date" onChange={(e) => setStart(e.target.value)} />
-          <div className="link-btn">Today</div>
+
+          <div className="date-parts">
+            <label>
+              Day:
+              <input
+                type="number"
+                value={start.day}
+                onChange={(e) =>
+                  setStart({ ...start, day: e.target.value })
+                }
+              />
+            </label>
+
+            <label>
+              Month:
+              <input
+                type="number"
+                value={start.month}
+                onChange={(e) =>
+                  setStart({ ...start, month: e.target.value })
+                }
+              />
+            </label>
+
+            <label>
+              Year:
+              <input
+                type="number"
+                value={start.year}
+                onChange={(e) =>
+                  setStart({ ...start, year: e.target.value })
+                }
+              />
+            </label>
+          </div>
+
+          <span className="link-btn">Today</span>
         </div>
 
-        {/* END DATE */}
+        {/* ADD / SUBTRACT */}
         <div>
-          <h3>End Date</h3>
-          <input type="date" onChange={(e) => setEnd(e.target.value)} />
-          <div className="link-btn">Today</div>
+          <h3>Add/Subtract</h3>
+          <select value={mode} onChange={(e) => setMode(e.target.value)}>
+            <option value="add">(+) Add</option>
+            <option value="subtract">(-) Subtract</option>
+          </select>
+        </div>
+
+        {/* DAYS */}
+        <div>
+          <h3>* Days</h3>
+          <input
+            type="text"
+            placeholder="25 or 10, 20, 65"
+            value={days}
+            onChange={(e) => setDays(e.target.value)}
+          />
         </div>
       </div>
 
       {/* OPTIONS */}
-      <div className="options">
-        <label>
-          <input
-            type="checkbox"
-            checked={includeEnd}
-            onChange={(e) => setIncludeEnd(e.target.checked)}
-          />
-          Include end date in calculation (1 day is added)
-        </label>
-      </div>
-
-      {/* DAYS IN RESULT */}
       <div className="days-result">
         <label>Days in Results:</label>
         <select>
@@ -76,26 +139,29 @@ export default function Workdays() {
         </select>
 
         <select>
-          <option>Weekends</option>
           <option>Weekends and public holidays</option>
         </select>
+
+        <p className="hint">
+          Holidays for India – Nationwide.
+          <span className="link"> Change Country</span> /
+          <span className="link"> Change State</span>
+        </p>
+
+        <label>
+          <input type="checkbox" /> Repeat
+        </label>
       </div>
 
-      <button className="calc-btn" onClick={calculateWorkdays}>
-        Calculate Duration
+      <button className="calc-btn" onClick={calculate}>
+        Calculate New Date
       </button>
 
       {/* RESULT */}
-      {result !== null && (
-        <div className="result-box">
-          <h3>Result</h3>
-          <p>
-            There are <b>{result}</b> workdays between the selected dates.
-          </p>
-        </div>
-      )}
-
-      <WorkdaysResult data={result} />
+      {result &&
+        result.map((r, i) => (
+          <AddWorkdaysResult key={i} data={r} />
+        ))}
     </>
   );
 }

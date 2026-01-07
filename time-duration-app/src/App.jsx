@@ -6,10 +6,14 @@ import DetailedResult from "./components/DetailedResult";
 import { getFullDuration } from "./utils/durationUtils";
 import AddDays from "./components/AddDays"; 
 import Workdays from "./components/Workdays";
+import AddWorkdays from "./components/AddWorkdays";
+import Weekday from "./components/Weekday";
+import WeekNo from "./components/WeekNo";
 import "./App.css";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("Count Days");
+
 
   const [start, setStart] = useState({ date: "", time: "" });
   const [end, setEnd] = useState({ date: "", time: "" });
@@ -37,8 +41,7 @@ export default function App() {
       <Header />
 
       <div className="container">
-        <h1>Time Calculator: Duration Between Two Times and Dates</h1>
-
+        
         {/* ✅ Tabs now controlled */}
         <Tabs active={activeTab} setActive={setActiveTab} />
 
@@ -74,6 +77,14 @@ export default function App() {
         {/*   workdays */}
 
         {activeTab === "Workdays" && <Workdays />}
+
+          {/* ✅ ADD WORKDAYS  */}
+      {activeTab === "Add Workdays" && <AddWorkdays />}
+
+      {activeTab === "Weekday" && <Weekday />}
+
+      {activeTab === "Week No" && <WeekNo />}
+
       </div>
     </>
   );

@@ -1,15 +1,16 @@
 export default function Header() {
   return (
-    <header className="header">
-      <h2>timeanddate</h2>
-      <nav>
-        <a>News</a>
-        <a>World Clock</a>
-        <a>Time Zones</a>
-        <a>Calendar</a>
-        <a>Weather</a>
-        <a>Calculators</a>
-      </nav>
+    <header className="calc-header">
+      <div className="calc-header-inner">
+        <div className="calc-logo">
+          <span className="logo-icon">⏱️</span>
+          <span className="logo-text">Time & Date Calculator</span>
+        </div>
+
+        <p className="calc-tagline">
+          Simple tools to calculate days, workdays, weekdays, and week numbers
+        </p>
+      </div>
     </header>
   );
 }
